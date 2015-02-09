@@ -1,13 +1,16 @@
 #!/bin/sh -ex
 
-UNIKERNEL=mir-decks
+VM=mir-decks
 
+XM=xm
 KERNEL=`pwd`/xen/`cat xen/latest`
-sed -e "s,@KERNEL@,$KERNEL/${UNIKERNEL}.xen,g" < xl.conf.in > $KERNEL/xl.conf
+sed -e "s,@VM@,$VM,g; s,@KERNEL@,$KERNEL/$VM.xen,g" \
+    < $XM.conf.in \
+    > $KERNEL/$XM.conf
 
 cd $KERNEL
-rm -f ${UNIKERNEL}.xen
-bunzip2 -k ${UNIKERNEL}.xen.bz2
+rm -f $VM.xen
+bunzip2 -k $VM.xen.bz2
 
-sudo xl destroy ${UNIKERNEL} || true
-sudo xl create xl.conf
+sudo $XM destroy $VM || true
+sudo $XM create $XM.conf
