@@ -1,0 +1,1 @@
+*/11 * * * * cd $HOME/mirage-decks-deployment && git pull
