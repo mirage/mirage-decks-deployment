@@ -15,5 +15,4 @@
 # PERFORMANCE OF THIS SOFTWARE.
 
 ROOT=$(git rev-parse --show-toplevel)
-crontab scripts/crontab
 exec $ROOT/scripts/deploy.sh

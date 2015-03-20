@@ -20,6 +20,8 @@ XM=xm
 ROOT=$(git rev-parse --show-toplevel)
 cd $ROOT
 
+crontab scripts/crontab
+
 KERNEL=$ROOT/xen/`cat xen/latest`
 sed -e "s,@VM@,$VM,g; s,@KERNEL@,$KERNEL/$VM.xen,g" \
     < $XM.conf.in \
