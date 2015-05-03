@@ -15,7 +15,7 @@
 # PERFORMANCE OF THIS SOFTWARE.
 
 VM=mir-decks
-XM=xm
+XM=xl
 
 ROOT=$(git rev-parse --show-toplevel)
 cd $ROOT
