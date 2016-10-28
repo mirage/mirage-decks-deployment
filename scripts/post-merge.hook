@@ -31,14 +31,18 @@ exec 1<&-
 exec 2<&-
 exec 1<>LOG_FILE
 exec 2>&1
-echo "This line will appear in LOG_FILE, not 'on screen'"
+echo "LOG: $(date)"
 
 cd $(dirname "$(readlink -f "$0")") # canonicalise directory
+echo "1. $(pwd)"
 
 HTTP=decks.openmirage.org
 
+echo "2. $(pwd)"
 ROOT=$(git rev-parse --show-toplevel)
+echo "3. $(pwd)"
 ls -la $ROOT
+echo "4. $(pwd)"
 
 KERNEL=$ROOT/xen/$(cat "$ROOT/xen/latest")
 ls -la $KERNEL
