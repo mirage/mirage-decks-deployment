@@ -38,8 +38,10 @@ echo "PWD: $(pwd)"
 cd $(dirname "$(readlink -f "$0")") # canonicalise directory
 HTTP=decks.openmirage.org
 
-# turns out `GIT_DIR` is set to `.git` for the hook. sigh.
-ROOT=$(GIT_DIR= git rev-parse --show-toplevel)
+# turns out `GIT_DIR` is set to `.git` for the hook causing `git rev-parse
+# --show-toplevel` to fail. unset it.
+unset GIT_DIR
+ROOT=$(git rev-parse --show-toplevel)
 KERNEL=$ROOT/xen/$(cat "$ROOT/xen/latest")
 
 if [ -f "$KERNEL/mir-${HTTP}.xen.bz2" ]; then
