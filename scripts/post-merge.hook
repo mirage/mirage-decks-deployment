@@ -24,19 +24,24 @@
 # OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 # PERFORMANCE OF THIS SOFTWARE.
 
+set -x
+
 ## uncomment if necessary when debugging. redirects output to LOG_FILE
-# exec 1<&-
-# exec 2<&-
-# exec 1<>LOG_FILE
-# exec 2>&1
-# echo "This line will appear in LOG_FILE, not 'on screen'"
+exec 1<&-
+exec 2<&-
+exec 1<>LOG_FILE
+exec 2>&1
+echo "This line will appear in LOG_FILE, not 'on screen'"
 
 cd $(dirname "$(readlink -f "$0")") # canonicalise directory
 
 HTTP=decks.openmirage.org
 
 ROOT=$(git rev-parse --show-toplevel)
+ls -la $ROOT
+
 KERNEL=$ROOT/xen/$(cat "$ROOT/xen/latest")
+ls -la $KERNEL
 
 if [ -f "$KERNEL/mir-${HTTP}.xen.bz2" ]; then
     "$ROOT/scripts/deploy.sh" $HTTP
