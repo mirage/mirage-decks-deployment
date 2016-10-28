@@ -34,18 +34,11 @@ exec 2>&1
 echo "LOG: $(date)"
 
 cd $(dirname "$(readlink -f "$0")") # canonicalise directory
-echo "1. $(pwd)"
-
 HTTP=decks.openmirage.org
 
-echo "2. $(pwd)"
-ROOT=$(echo "2a. $(pwd)" ; env | sort ; git rev-parse --show-toplevel)
-echo "3. $(pwd) :: $ROOT"
-ls -la $ROOT
-echo "4. $(pwd)"
-
+# turns out `GIT_DIR` is set to `.git` for the hook. sigh.
+ROOT=$(GIT_DIR= git rev-parse --show-toplevel)
 KERNEL=$ROOT/xen/$(cat "$ROOT/xen/latest")
-ls -la $KERNEL
 
 if [ -f "$KERNEL/mir-${HTTP}.xen.bz2" ]; then
     "$ROOT/scripts/deploy.sh" $HTTP
