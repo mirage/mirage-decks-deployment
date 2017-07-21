@@ -1,4 +1,4 @@
-#!/bin/sh -eu
+#!/bin/sh -eux
 ### BEGIN INIT INFO
 # Provides:          decks.openmirage.org
 # Required-Start:    $local_fs $network $syslog $time
@@ -37,13 +37,12 @@
 cd $(dirname "$(readlink -f "$0")") # canonicalise directory
 
 HTTP=decks.openmirage.org
+VM=$(echo $HTTP | sed 's/\.//g')
 
-# turns out `GIT_DIR` is set to `.git` for the hook causing `git rev-parse
-# --show-toplevel` to fail. unset it.
 unset GIT_DIR
 ROOT=$(git rev-parse --show-toplevel)
 KERNEL=$ROOT/xen/$(cat "$ROOT/xen/latest")
 
-if [ -f "$KERNEL/mir-${HTTP}.xen.bz2" ]; then
-    "$ROOT/scripts/deploy.sh" $HTTP
+if [ -f "$KERNEL/${VM}.xen.bz2" ]; then
+    "$ROOT/scripts/deploy.sh" $HTTP $VM
 fi
